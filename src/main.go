@@ -11,9 +11,9 @@ type app struct {
 }
 
 func directoryStructure(appName string, mode os.FileMode) {
-	src := "./" + appName + "/src"
-	style := "./" + appName + "/style"
-	images := "./" + appName + "/images"
+	src := "./src"
+	style := "./style"
+	images := "./images"
 	os.Mkdir(appName, mode)
 	os.Mkdir(src, mode)
 	os.Mkdir(style, mode)
@@ -45,16 +45,15 @@ func generateWebServer() {
 	serverString = "package main\n\n"
 	serverString += "import \"net/http\"\n"
 	serverString += "import \"fmt\"\n\n"
-	serverString += "func rootHandler(w http.ResponseWriter, r *http.Request) {\n"
-	serverString += "   fmt.Fprintf(w, \"Hello World from Oolong\")\n"
-	serverString += "}\n\n"
 	serverString += "func main() {\n"
 	serverString += "   mux := http.NewServeMux()\n"
-	serverString += "   mux.HandleFunc(\"/\", rootHandler)\n"
+	serverString += "   files := http.FileServer(http.Dir(config.Static))\n"
+	serverString += "   mux.Handle(\"/static/\",http.StripPrefix(\"/static\",files))"
+	serverString += "   mux.HandleFunc(\"/\", index)\n"
 	serverString += "   http.ListenAndServe(\":5000\", mux)\n"
 	serverString += "}"
 
-	server, err := os.Create("./server.go")
+	server, err := os.Create("./src/server.go")
 	if err != nil {
 		panic(err)
 	}
@@ -65,8 +64,8 @@ func generateWebServer() {
 }
 
 func compileWebServer() {
-	server := exec.Command("go", "build", "-o", "server", "./server.go")
-	execServer := exec.Command("./server")
+	server := exec.Command("go", "build", "-o", "server", "./src/server.go")
+	execServer := exec.Command("./src/server")
 	server.Run()
 	execServer.Run()
 }
