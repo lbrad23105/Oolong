@@ -1,2 +1,8 @@
 # Oolong
-A simple CSS and JavaScript Framework for the Mobile Platform. Takes inspiration from Google's Material Design.
+A simple web app generator written in Go.
+
+### How to use
+ ```
+ oolong app 1.0.0
+ ```
+
