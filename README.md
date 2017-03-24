@@ -1,3 +1,7 @@
+![alt text][logo]
+
+[logo]: ./src/oolong.png "Oolong"
+
 # Oolong
 A simple web app generator written in Go.
 
