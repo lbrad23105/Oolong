@@ -1,6 +1,4 @@
-![alt text][logo]
-
-[logo]: ./src/oolong.png "Oolong"
+![alt text](./src/oolong.png "Let's generate some code!!!")
 
 # Oolong
 A simple web app generator written in Go.
